@@ -8,10 +8,13 @@ data = pd.read_csv('C:/Users/Altar/Desktop/paleoakıntı örnek.csv', header=Non
 # Extract the degree values given in azimuth
 a = data.values.flatten()
 
+#the degree intervals (30 and 45 degrees are mostly used in paleocurrent diagrams)
+i = 30
+
 fig, ax = plt.subplots(figsize=(7,5))
-ax.hist(a, bins=[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360])
+ax.hist(a, np.arange(0, 361, i))
 ax.set_xlim(0, 360)
-plt.xticks([0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360])
+plt.xticks(np.arange(0, 361, i))
 
 plt.xlabel("Paleoakıntı verileri için derece aralığı", fontsize = 15)
 plt.ylabel("Frekans",fontsize = 15)
@@ -19,7 +22,7 @@ plt.ylabel("Frekans",fontsize = 15)
 #buradan sonrası rose diagram için
 
 # the flow direction bins
-bins = np.arange(0, 361, 30)
+bins = np.arange(0, 361, i)
 
 # Computing the FREQUENCY! of flow directions given in AZIMUTH! for each bin
 hist, _ = np.histogram(a, bins=bins)
@@ -35,7 +38,7 @@ fig2 = plt.figure(figsize=(7, 7))
 ax = fig2.add_subplot(111, projection='polar')
 
 # plotting the rose diagram
-ax.bar(np.deg2rad(midpoints), hist, width=np.deg2rad(30), edgecolor='white')
+ax.bar(np.deg2rad(midpoints), hist, width=np.deg2rad(i), edgecolor='white')
 
 # Setting the direction of the plot to clockwise (because of azimuth)
 ax.set_theta_direction(-1)
@@ -47,7 +50,7 @@ ax.set_theta_zero_location('N')
 ax.set_title('paleoakıntı verileri gül diyagramı')
 
 #setting the angular tick labels
-ax.set_thetagrids(np.arange(0, 360, 30), labels=np.arange(0, 360, 30))
+ax.set_thetagrids(np.arange(0, 360, i), labels=np.arange(0, 360, i))
 
 # Set the radial tick labels for the frequency scale
 ax.set_rlabel_position(135)
