@@ -3,7 +3,9 @@ import numpy as np
 import pandas as pd
 
 # reading the CSV
-data = pd.read_csv('C:/Users/Altar/Desktop/paleoakıntı örnek.csv', header=None)
+csv_path = input("Enter the path for the CSV file: ")
+
+data = pd.read_csv(csv_path, header=None)
 
 # Extract the degree values given in azimuth
 a = data.values.flatten()
