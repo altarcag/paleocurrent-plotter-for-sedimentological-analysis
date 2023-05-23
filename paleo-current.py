@@ -49,7 +49,7 @@ ax.set_theta_direction(-1)
 ax.set_theta_zero_location('N')
 
 # Setting the title and legend
-ax.set_title('paleoakıntı verileri gül diyagramı')
+ax.set_title('paleoakıntı gül diyagramı')
 
 #setting the angular tick labels
 ax.set_thetagrids(np.arange(0, 360, i), labels=np.arange(0, 360, i))
