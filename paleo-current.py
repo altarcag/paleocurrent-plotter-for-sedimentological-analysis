@@ -14,19 +14,28 @@ while True:
 
     #check if choice is one of the two options
     if choice in ('1'):
+        # Manually add data
+        data = []
+        print("Enter data (0-360), type 'ok' to finish:")
+        while True:
+            entry = input("Enter data point: ")
+            if entry == 'ok':
+                break
+            data.append(float(entry))
         break
 
     if choice in ('2'):
     # reading the CSV
         csv_path = input("Enter the path for the CSV file: ")
+        data = pd.read_csv(csv_path, header=None).values.flatten()
+        break
 
-        data = pd.read_csv(csv_path, header=None)
-
-    break
-
+    else:
+        print("Invalid entry")
 
 # Extract the degree values given in azimuth
-a = data.values.flatten()
+#a = data.values.flatten()
+a = np.array(data)
 
 #the degree intervals (30 and 45 degrees are mostly used in paleocurrent diagrams)
 i = 30
