@@ -35,6 +35,7 @@ while True:
 
 # Extract the degree values given in azimuth
 #a = data.values.flatten()
+
 a = np.array(data)
 
 #the degree intervals (30 and 45 degrees are mostly used in paleocurrent diagrams)
