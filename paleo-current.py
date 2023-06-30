@@ -1,11 +1,29 @@
+import matplotlib
+matplotlib.use('TkAgg')
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 
-# reading the CSV
-csv_path = input("Enter the path for the CSV file: ")
+print("select operation")
+print("1. manually add data")
+print("1. add data through CSV path")
 
-data = pd.read_csv(csv_path, header=None)
+while True:
+    #taking input
+    choice = input("Enter choice(1/2): ")
+
+    #check if choice is one of the two options
+    if choice in ('1'):
+        break
+
+    if choice in ('2'):
+    # reading the CSV
+        csv_path = input("Enter the path for the CSV file: ")
+
+        data = pd.read_csv(csv_path, header=None)
+
+    break
+
 
 # Extract the degree values given in azimuth
 a = data.values.flatten()
@@ -49,7 +67,7 @@ ax.set_theta_direction(-1)
 ax.set_theta_zero_location('N')
 
 # Setting the title and legend
-ax.set_title('paleoakıntı gül diyagramı')
+ax.set_title('paleoakıntı verileri gül diyagramı')
 
 #setting the angular tick labels
 ax.set_thetagrids(np.arange(0, 360, i), labels=np.arange(0, 360, i))
