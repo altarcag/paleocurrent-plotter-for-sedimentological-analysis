@@ -19,9 +19,18 @@ while True:
         print("Enter data (0-360), type 'ok' to finish:")
         while True:
             entry = input("Enter data point: ")
+
             if entry == 'ok':
                 break
-            data.append(float(entry))
+            if entry == '':
+                continue
+
+            value = int(entry)
+            if value < 0 or value > 360:
+                print("Invalid value! the data should be in azimuth degrees!")
+            else:
+                data.append(float(entry))
+
         break
 
     if choice in ('2'):
@@ -31,7 +40,9 @@ while True:
         break
 
     else:
-        print("Invalid entry")
+        print("Invalid choice")
+        print("1. manually add data")
+        print("1. add data through CSV path")
 
 # Extract the degree values given in azimuth
 #a = data.values.flatten()
