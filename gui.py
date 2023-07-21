@@ -6,24 +6,46 @@ import numpy as np
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
+#from tkinter import filedialog, messagebox
+
+data = []
 
 def manual_data_entry():
+    global data
     data = []
+
+    def update_data_display():
+        last_entries = data[-3:]  # Get the last 4 data entries
+        data_display_label.config(text="Last 3 Data Entries: " + ", ".join(map(str, last_entries)))
 
     def add_data_point(event):
         entry = data_entry_var.get().strip()
         try:
             value = int(entry)
             if value < 0 or value > 360:
-                raise ValueError("Invalid value! The data should be in azimuth degrees!")
+                warning_label.config(text="Invalid value! The data should be in azimuth degrees!")
+                root.after(4000, clear_warning)
+                #raise ValueError("Invalid value! The data should be in azimuth degrees!")
             data.append(float(entry))
             data_entry_var.set("")  # Clear the entry for next data point
         except ValueError:
-            data_entry_var.set("Invalid input! Please enter a valid numeric value.")
+            warning_label.config(text="Invalid input! Please enter a valid numeric value.")
+            root.after(4000, clear_warning)
+            #messagebox.showwarning("Invalid Input", "Please enter a valid numeric value.")
 
-    def finish_data_entry(event):
+        update_data_display()
+
+    def clear_warning():
+        warning_label.config(text="")  # Clear the warning label
+
+    def finish_data_entry():
         root.bind('<Return>', None)  # Unbind the Enter key
         plot_histogram_and_rose(data)
+
+
+    def reset_data():
+        global data
+        data = []
 
     # Clear the main application window
     for widget in root.winfo_children():
@@ -36,7 +58,23 @@ def manual_data_entry():
 
     data_entry_field.bind('<Return>', add_data_point)  # Bind Enter key to add_data_point function
 
-    root.bind('<Escape>', finish_data_entry)  # Bind Escape key to finish_data_entry function
+    # Warning label to display error messages
+    warning_label = tk.Label(root, text="", fg="red")
+    warning_label.pack()
+
+    # Button to finish data entry and plot
+    finish_button = tk.Button(root, text="Finish and Plot", command=finish_data_entry)
+    finish_button.pack()
+    # Button to reset data
+    reset_button = tk.Button(root, text="Reset Data", command=reset_data)
+    reset_button.pack()
+
+    # Data display label to show the last 4 data entries
+    data_display_label = tk.Label(root, text="", fg="black", bg="grey")
+    data_display_label.pack()
+
+    # Update the data display label initially
+    update_data_display()
 
 def csv_data_entry():
     csv_path = filedialog.askopenfilename(title="Select CSV file", filetypes=[("CSV files", "*.csv")])
@@ -74,14 +112,16 @@ def plot_histogram_and_rose(data):
 
 # Create the main application window
 root = tk.Tk()
-root.title("Data Visualization App")
+root.title("Paleocurrent Plotter for Sedimentological Analysis v0.1.0")
+root.geometry("1280x720")
+root.configure(bg="grey")
 
 # Button to manually add data
-manual_button = tk.Button(root, text="Manually Add Data", command=manual_data_entry)
+manual_button = tk.Button(root, text="Manually Add Data", command=manual_data_entry, pady=32, padx=32)
 manual_button.pack()
 
 # Button to add data through a CSV file
-csv_button = tk.Button(root, text="Add Data from CSV", command=csv_data_entry)
+csv_button = tk.Button(root, text="Add Data through a CSV file", command=csv_data_entry, pady=32, padx=32)
 csv_button.pack()
 
 # Run the application
