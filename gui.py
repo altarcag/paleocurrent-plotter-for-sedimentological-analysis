@@ -15,8 +15,9 @@ def manual_data_entry():
     data = []
 
     def update_data_display():
-        last_entries = data[-3:]  # Get the last 4 data entries
-        data_display_label.config(text="Last 3 Data Entries: " + ", ".join(map(str, last_entries)))
+        last_entries = data[-3:]  # Get the last 3 data entries
+        label31 = [int(entry) for entry in last_entries]
+        data_display_label.config(text="Last 3 Data Entries: " + ", ".join(map(str, label31)))
 
     def add_data_point(event):
         entry = data_entry_var.get().strip()
