@@ -19,6 +19,9 @@ def manual_data_entry():
         label31 = [int(entry) for entry in last_entries]
         data_display_label.config(text="Last 3 Data Entries: " + ", ".join(map(str, label31)))
 
+        # Update the total count label
+        total_count_label.config(text="Total Data Count: " + str(len(data)))
+
     def add_data_point(event):
         entry = data_entry_var.get().strip()
         try:
@@ -35,6 +38,7 @@ def manual_data_entry():
             #messagebox.showwarning("Invalid Input", "Please enter a valid numeric value.")
 
         update_data_display()
+
 
     def clear_warning():
         warning_label.config(text="")  # Clear the warning label
@@ -71,11 +75,16 @@ def manual_data_entry():
     reset_button.pack()
 
     # Data display label to show the last 4 data entries
-    data_display_label = tk.Label(root, text="", fg="black", bg="grey")
+    data_display_label = tk.Label(root, text="", fg="black", bg="white")
     data_display_label.pack()
+
+    # total count label
+    total_count_label = tk.Label(root, text=" ", fg="red")
+    total_count_label.pack()
 
     # Update the data display label initially
     update_data_display()
+    total_count_label.config(text="Total Data count: " + str(len(data)))
 
 def csv_data_entry():
     csv_path = filedialog.askopenfilename(title="Select CSV file", filetypes=[("CSV files", "*.csv")])
