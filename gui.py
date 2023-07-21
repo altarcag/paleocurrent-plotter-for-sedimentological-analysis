@@ -26,16 +26,21 @@ def manual_data_entry():
         entry = data_entry_var.get().strip()
         try:
             value = int(entry)
+
             if value < 0 or value > 360:
                 warning_label.config(text="Invalid value! The data should be in azimuth degrees!")
                 root.after(4000, clear_warning)
-                #raise ValueError("Invalid value! The data should be in azimuth degrees!")
+                data_entry_var.set("") # clear after return
+                return # in order to not include the data to the dataset
             data.append(float(entry))
-            data_entry_var.set("")  # Clear the entry for next data point
+            data_entry_var.set("")  # clear the entry for next data point
+
         except ValueError:
             warning_label.config(text="Invalid input! Please enter a valid numeric value.")
             root.after(4000, clear_warning)
-            #messagebox.showwarning("Invalid Input", "Please enter a valid numeric value.")
+        data_entry_var.set("")  #clear the entry for nbext data point
+
+        #messagebox.showwarning("Invalid Input", "Please enter a valid numeric value.")
 
         update_data_display()
 
@@ -122,7 +127,7 @@ def plot_histogram_and_rose(data):
 
 # Create the main application window
 root = tk.Tk()
-root.title("Paleocurrent Plotter for Sedimentological Analysis v0.1.0")
+root.title("Paleocurrent Plotter for Sedimentological Analysis v0.3.1")
 root.geometry("1280x720")
 root.configure(bg="grey")
 
