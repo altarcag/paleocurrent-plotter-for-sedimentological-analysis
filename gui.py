@@ -7,6 +7,7 @@ import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 #from tkinter import filedialog, messagebox
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 
 data = []
 
@@ -117,7 +118,7 @@ def plot_histogram_and_rose(data):
     # Add labels to the bars that match the y-axis tick values
     for bar, height in zip(ax.patches, hist):
         if height not in ax.get_yticks():
-            ax.text(bar.get_x() + bar.get_width() / 2, height + 0.1, str(height), ha='center', va='bottom')
+            ax.text(bar.get_x() + bar.get_width() / 2, height + 0.05, str(height), ha='center', va='bottom')
 
     fig2 = plt.figure(figsize=(7, 7))
     ax = fig2.add_subplot(111, projection='polar')
@@ -131,6 +132,18 @@ def plot_histogram_and_rose(data):
     ax.set_yticklabels(hist)
 
     plt.show()
+
+    # creating a canvas to put the plotted charts inside of the gui
+    canvas = FigureCanvasTkAgg(fig, master=root)
+    canvas.draw()
+
+    canvas.get_tk_widget().pack()
+
+    toolbar = NavigationToolbar2Tk(canvas, root)
+
+    toolbar.update()
+
+    canvas.get_tk_widget().pack()
 
 # Create the main application window
 root = tk.Tk()
