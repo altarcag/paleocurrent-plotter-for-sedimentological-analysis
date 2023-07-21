@@ -1,7 +1,7 @@
 import matplotlib
 matplotlib.use('TkAgg')
 from matplotlib import pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+#from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import pandas as pd
 import tkinter as tk
@@ -16,8 +16,8 @@ def manual_data_entry():
 
     def update_data_display():
         last_entries = data[-3:]  # Get the last 3 data entries
-        label31 = [int(entry) for entry in last_entries]
-        data_display_label.config(text="Last 3 Data Entries: " + ", ".join(map(str, label31)))
+        label31sj = [int(entry) for entry in last_entries]
+        data_display_label.config(text="Last 3 Data Entries: " + ", ".join(map(str, label31sj)))
 
         # Update the total count label
         total_count_label.config(text="Total Data Count: " + str(len(data)))
@@ -28,16 +28,16 @@ def manual_data_entry():
             value = int(entry)
 
             if value < 0 or value > 360:
-                warning_label.config(text="Invalid value! The data should be in azimuth degrees!")
-                root.after(4000, clear_warning)
+                warning_label.config(text="Invalid value! The data should be in azimuth degrees!", bg="grey")
+                root.after(5000, clear_warning)
                 data_entry_var.set("") # clear after return
                 return # in order to not include the data to the dataset
             data.append(float(entry))
             data_entry_var.set("")  # clear the entry for next data point
 
         except ValueError:
-            warning_label.config(text="Invalid input! Please enter a valid numeric value.")
-            root.after(4000, clear_warning)
+            warning_label.config(text="Invalid input! Please enter a valid numeric value.", bg="grey")
+            root.after(5000, clear_warning)
         data_entry_var.set("")  #clear the entry for nbext data point
 
         #messagebox.showwarning("Invalid Input", "Please enter a valid numeric value.")
@@ -56,6 +56,7 @@ def manual_data_entry():
     def reset_data():
         global data
         data = []
+        update_data_display()
 
     # Clear the main application window
     for widget in root.winfo_children():
@@ -75,6 +76,7 @@ def manual_data_entry():
     # Button to finish data entry and plot
     finish_button = tk.Button(root, text="Finish and Plot", command=finish_data_entry)
     finish_button.pack()
+
     # Button to reset data
     reset_button = tk.Button(root, text="Reset Data", command=reset_data)
     reset_button.pack()
@@ -112,12 +114,17 @@ def plot_histogram_and_rose(data):
     hist = np.array(hist)
     midpoints = bins[:-1] + np.diff(bins) / 2
 
+    # Add labels to the bars that match the y-axis tick values
+    for bar, height in zip(ax.patches, hist):
+        if height not in ax.get_yticks():
+            ax.text(bar.get_x() + bar.get_width() / 2, height + 0.1, str(height), ha='center', va='bottom')
+
     fig2 = plt.figure(figsize=(7, 7))
     ax = fig2.add_subplot(111, projection='polar')
     ax.bar(np.deg2rad(midpoints), hist, width=np.deg2rad(i), edgecolor='white')
     ax.set_theta_direction(-1)
     ax.set_theta_zero_location('N')
-    ax.set_title('paleoakıntı verileri gül diyagramı')
+    ax.set_title('paleoakıntı verileri için gül diyagramı')
     ax.set_thetagrids(np.arange(0, 360, i), labels=np.arange(0, 360, i))
     ax.set_rlabel_position(135)
     ax.set_yticks(hist)
