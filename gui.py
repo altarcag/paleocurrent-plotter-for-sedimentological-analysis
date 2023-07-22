@@ -5,9 +5,11 @@ from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 import tkinter as tk
+from tkinter import ttk
 from tkinter import filedialog
-#from tkinter import filedialog, messagebox
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+import PIL
+from PIL import ImageTk, Image
 
 data = []
 
@@ -41,8 +43,6 @@ def manual_data_entry():
             root.after(5000, clear_warning)
         data_entry_var.set("")  #clear the entry for nbext data point
 
-        #messagebox.showwarning("Invalid Input", "Please enter a valid numeric value.")
-
         update_data_display()
 
 
@@ -60,39 +60,39 @@ def manual_data_entry():
         update_data_display()
 
     # Clear the main application window
-    for widget in root.winfo_children():
-        widget.destroy()
+    #for widget in root.winfo_children():
+     #   widget.destroy()
 
     data_entry_var = tk.StringVar()
-    data_entry_field = tk.Entry(root, textvariable=data_entry_var)
+    data_entry_field = tk.Entry(button_frame, textvariable=data_entry_var, width=30)
     data_entry_field.pack()
     data_entry_field.focus()  # Set focus on the data entry field
 
     data_entry_field.bind('<Return>', add_data_point)  # Bind Enter key to add_data_point function
 
     # Warning label to display error messages
-    warning_label = tk.Label(root, text="", fg="red")
+    warning_label = tk.Label(button_frame, text="", fg="red")
     warning_label.pack()
 
     # Button to finish data entry and plot
-    finish_button = tk.Button(root, text="Finish and Plot", command=finish_data_entry)
+    finish_button = tk.Button(button_frame, text="Finish and Plot", command=finish_data_entry, height=2, width=25)
     finish_button.pack()
 
     # Button to reset data
-    reset_button = tk.Button(root, text="Reset Data", command=reset_data)
+    reset_button = tk.Button(button_frame, text="Reset Data", command=reset_data, height=2, width=25)
     reset_button.pack()
 
     # Data display label to show the last 4 data entries
-    data_display_label = tk.Label(root, text="", fg="black", bg="white")
+    data_display_label = tk.Label(button_frame, text="", fg="black", bg="white")
     data_display_label.pack()
 
     # total count label
-    total_count_label = tk.Label(root, text=" ", fg="red")
+    total_count_label = tk.Label(button_frame, text=" ", fg="red")
     total_count_label.pack()
 
     # Update the data display label initially
     update_data_display()
-    total_count_label.config(text="Total Data count: " + str(len(data)))
+    total_count_label.config(text="Total Data Count: " + str(len(data)))
 
 def csv_data_entry():
     csv_path = filedialog.askopenfilename(title="Select CSV file", filetypes=[("CSV files", "*.csv")])
@@ -102,7 +102,7 @@ def csv_data_entry():
 def plot_histogram_and_rose(data):
     i = 30
 
-    fig, ax = plt.subplots(figsize=(7, 5))
+    fig, ax = plt.subplots(figsize=(6, 5))
     ax.hist(data, np.arange(0, 361, i))
     ax.set_xlim(0, 360)
     plt.xticks(np.arange(0, 361, i))
@@ -120,7 +120,7 @@ def plot_histogram_and_rose(data):
         if height not in ax.get_yticks():
             ax.text(bar.get_x() + bar.get_width() / 2, height + 0.05, str(height), ha='center', va='bottom')
 
-    fig2 = plt.figure(figsize=(7, 7))
+    fig2 = plt.figure(figsize=(6, 6))
     ax = fig2.add_subplot(111, projection='polar')
     ax.bar(np.deg2rad(midpoints), hist, width=np.deg2rad(i), edgecolor='white')
     ax.set_theta_direction(-1)
@@ -134,30 +134,47 @@ def plot_histogram_and_rose(data):
     plt.show()
 
     # creating a canvas to put the plotted charts inside of the gui
-    canvas = FigureCanvasTkAgg(fig, master=root)
-    canvas.draw()
+    canvas2 = FigureCanvasTkAgg(fig2, master=root)
+    canvas2.draw()
+    canvas2.get_tk_widget().pack()
+    toolbar2 = NavigationToolbar2Tk(canvas2, root)
+    toolbar2.update()
+    canvas2.get_tk_widget().pack()
 
-    canvas.get_tk_widget().pack()
+    canvas1 = FigureCanvasTkAgg(fig, master=root)
+    canvas1.draw()
+    canvas1.get_tk_widget().pack()
+    toolbar1 = NavigationToolbar2Tk(canvas1, root)
+    toolbar1.update()
+    canvas1.get_tk_widget().pack()
 
-    toolbar = NavigationToolbar2Tk(canvas, root)
-
-    toolbar.update()
-
-    canvas.get_tk_widget().pack()
 
 # Create the main application window
 root = tk.Tk()
 root.title("Paleocurrent Plotter for Sedimentological Analysis v0.3.1")
 root.geometry("1280x720")
 root.configure(bg="grey")
+root.iconbitmap('C:/Users/altar/PycharmProjects/paleocurrentplotter/images/hacettepe_icon.ico')
+
+# Create a frame to hold the buttons
+button_frame = ttk.Frame(root)
+button_frame.pack(side='left', padx=25, pady=10)
+
+# the images and logos and so on
+img1 = ImageTk.PhotoImage(Image.open("C:/Users/altar/PycharmProjects/paleocurrentplotter/images/hulogo.png"))
+img2 = ImageTk.PhotoImage(Image.open("C:/Users/altar/PycharmProjects/paleocurrentplotter/images/jeomuh.jpg"))
+labelimg1 = tk.Label(button_frame, image = img1)
+labelimg1.pack()
+labelimg2 = tk.Label(button_frame, image = img2)
+labelimg2.pack()
 
 # Button to manually add data
-manual_button = tk.Button(root, text="Manually Add Data", command=manual_data_entry, pady=32, padx=32)
-manual_button.pack()
+manual_button = tk.Button(button_frame, text="Manually Add Data", command=manual_data_entry, height=5, width=25)
+manual_button.pack(side='top', padx=1.5, pady=1.5)
 
 # Button to add data through a CSV file
-csv_button = tk.Button(root, text="Add Data through a CSV file", command=csv_data_entry, pady=32, padx=32)
-csv_button.pack()
+csv_button = tk.Button(button_frame, text="Add Data through a CSV file", command=csv_data_entry, height=5, width=25)
+csv_button.pack(side='top', padx=1.5, pady=1.5)
 
 # Run the application
 root.mainloop()
