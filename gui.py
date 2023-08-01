@@ -10,6 +10,7 @@ from tkinter import filedialog
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
 from PIL import ImageTk, Image
 import os
+import webbrowser
 
 data = []
 
@@ -115,7 +116,7 @@ def plot_histogram_and_rose(data):
     plt.xticks(np.arange(0, 361, i))
 
     plt.xlabel("Degree Intervals", fontsize=15)
-    plt.ylabel("Frekans", fontsize=15)
+    plt.ylabel("Frequency", fontsize=15)
 
     bins = np.arange(0, 361, i)
     hist, _ = np.histogram(data, bins=bins)
@@ -185,6 +186,8 @@ def switch():
         canvas2.get_tk_widget().pack()
         switchKey = True
 
+def callback(url):
+    webbrowser.open_new(url)
 
 # Create the main application window
 root = tk.Tk()
@@ -193,6 +196,9 @@ root.geometry("1280x768")
 root.configure(bg="grey")
 script_dir = os.path.dirname(__file__)
 root.iconbitmap(script_dir + '/images/hacettepe_icon.ico')
+
+
+
 
 # Create a frame to hold the buttons
 button_frame = ttk.Frame(root)
@@ -222,6 +228,11 @@ right_frame.pack(side='right', padx=25, pady=10)
 # sex
 switch_button = tk.Button(right_frame, text="Histogram/Rose Diagram", command=switch, height=5, width=25)
 switch_button.pack(side='top', padx=1.5, pady=1.5)
+
+# linksex
+link1 = tk.Label(right_frame, text="github.com/altarcag", fg="darkblue", cursor="hand2")
+link1.pack(padx=5, pady=7.5)
+link1.bind("<Button-1>", lambda e: callback("https://github.com/altarcag"))
 
 # Run the application
 root.mainloop()
