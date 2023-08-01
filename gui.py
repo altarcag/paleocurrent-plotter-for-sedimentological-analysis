@@ -114,7 +114,7 @@ def plot_histogram_and_rose(data):
     ax.set_xlim(0, 360)
     plt.xticks(np.arange(0, 361, i))
 
-    plt.xlabel("Paleoakıntı verileri için derece aralığı", fontsize=15)
+    plt.xlabel("Degree Intervals", fontsize=15)
     plt.ylabel("Frekans", fontsize=15)
 
     bins = np.arange(0, 361, i)
@@ -132,7 +132,7 @@ def plot_histogram_and_rose(data):
     ax.bar(np.deg2rad(midpoints), hist, width=np.deg2rad(i), edgecolor='white')
     ax.set_theta_direction(-1)
     ax.set_theta_zero_location('N')
-    ax.set_title('paleoakıntı verileri için gül diyagramı')
+    ax.set_title('Rose Diagram for Paleocurrent values')
     ax.set_thetagrids(np.arange(0, 360, i), labels=np.arange(0, 360, i))
     ax.set_rlabel_position(135)
     ax.set_yticks(hist)
