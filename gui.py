@@ -8,7 +8,6 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
-import PIL
 from PIL import ImageTk, Image
 import os
 
@@ -19,6 +18,9 @@ canvas2 = 0
 toolbar = 0
 
 def manual_data_entry():
+    # Disable the "Manually Add Data" button to prevent multiple clicks
+    manual_button.config(state=tk.DISABLED)
+
     global data
     data = []
 
@@ -187,7 +189,7 @@ def switch():
 # Create the main application window
 root = tk.Tk()
 root.title("Paleocurrent Plotter for Sedimentological Analysis v0.3.1")
-root.geometry("1280x960")
+root.geometry("1280x768")
 root.configure(bg="grey")
 script_dir = os.path.dirname(__file__)
 root.iconbitmap(script_dir + '/images/hacettepe_icon.ico')
@@ -199,7 +201,7 @@ button_frame.pack(side='left', padx=25, pady=10)
 # the images and logos and so on
 
 img1 = ImageTk.PhotoImage(Image.open(script_dir + "\\images\\hulogo.png"))
-img2 = ImageTk.PhotoImage(Image.open(script_dir + "\\images\\jeomuh.jpg"))
+img2 = ImageTk.PhotoImage(Image.open(script_dir + "\\images\\jeomuh.png"))
 labelimg1 = tk.Label(button_frame, image=img1)
 labelimg1.pack()
 labelimg2 = tk.Label(button_frame, image=img2)
@@ -218,7 +220,7 @@ right_frame = ttk.Frame(root)
 right_frame.pack(side='right', padx=25, pady=10)
 
 # sex
-switch_button = tk.Button(right_frame, text="Switch", command=switch, height=5, width=25)
+switch_button = tk.Button(right_frame, text="Histogram/Rose Diagram", command=switch, height=5, width=25)
 switch_button.pack(side='top', padx=1.5, pady=1.5)
 
 # Run the application
