@@ -3,7 +3,7 @@ a paleocurrent plotter for plotting a histogram and a rose diagram out of paleoc
 
 Sedimentary structures that indicate paleocurrents include: flute marks, ripple marks etc.
 Paleocurrents are usually measured with an azimuth, or as a rake on a bedding plane, and displayed with a Rose Diagram to show the dominant direction(s) of flow.
-[1](https://en.wikipedia.org/wiki/Azimuth)
+[[1]](https://en.wikipedia.org/wiki/Azimuth)
 
 examples: 
 
