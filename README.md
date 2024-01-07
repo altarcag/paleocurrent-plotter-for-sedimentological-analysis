@@ -13,8 +13,8 @@ examples:
 ![image](https://github.com/altarcag/paleocurrent-plotter-for-sedimentological-analysis/assets/26670231/cb6fa16d-58d4-4e84-a5b6-548dfbbcc1c9)
 
 
-I decided to make this plotter app for making it easy to do one of my homeworks given in (JEO264) Sedimentology class at Hacettepe Uni. I did not want to waste my time drawing the diagrams by hand so I wasted a lot more time for automatizing it.
-It can be used without a GUI as well, just run paleo-current.py in your Python IDE. gui.py and moderngui.py basically do the same thing but the moderngui.py looks a lot better, had to come up with it after one of my friends mocked me on how it looks like an early 2000s interface.
+I decided to make this plotter app for making it easy to do one of my homework given in (JEO264) Sedimentology class at Hacettepe Uni. I did not want to waste my time drawing the diagrams by hand so I wasted a lot more time for automatizing it.
+The plotter can be used without a GUI as well, just run paleo-current.py in your Python IDE. gui.py and moderngui.py basically do the same thing but the moderngui.py looks a lot better, had to come up with it after one of my friends mocked me on how the previous gui looks like an early 2000s interface.
 A download link for the app will be included here after some minor improvements I need to make on it.
 
-
+Course Instructor: Dr. Alaettin Tuncer
