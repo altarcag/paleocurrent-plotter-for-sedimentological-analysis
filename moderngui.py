@@ -236,12 +236,12 @@ csv_button = customtkinter.CTkButton(button_frame, text="Add Data through a CSV 
                                      height=32, width=180)
 csv_button.pack(side='top', padx=2, pady=2)
 
-# sex
+# sx
 switch_button = customtkinter.CTkButton(right_frame, text="Histogram/Rose Diagram", command=lambda: switch(),
                                         height=32, width=180)
 switch_button.pack(side='top', padx=2, pady=2)
 
-# linksex
+# linksx
 link1 = customtkinter.CTkLabel(right_frame, text="github.com/altarcag", cursor="hand2")
 link1.pack(padx=2, pady=2)
 link1.bind("<Button-1>", lambda e: callback("https://github.com/altarcag"))
