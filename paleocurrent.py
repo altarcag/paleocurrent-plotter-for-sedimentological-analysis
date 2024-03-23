@@ -232,7 +232,7 @@ customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
 
 root = customtkinter.CTk()
-root.title("Paleocurrent Plotter for Sedimentological Analysis v0.3.1")
+root.title("Paleocurrent Plotter for Sedimentological Analysis v1.31")
 root.geometry("1280x720")
 script_dir = os.path.dirname(__file__)
 root.iconbitmap(script_dir + '/images/hacettepe_icon.ico')
